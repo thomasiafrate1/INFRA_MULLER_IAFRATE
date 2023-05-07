@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP INFRA MULLER IAFRATE</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div>
+        <h1 class="titre">ARCHITECTURE CLIENT-SERVEUR</h1>
+    </div>
+        <div>
+            <div class="sous-titre">
+            <h2>PARTIE I :</h2>
+            <h2>INSTALLATION DES MACHINES VIRTUELLES</h2>
+            <p>
+                Installer 1 VM Linux Debian et 1 VM Windows pour le côté client.<br>
+                Installer 2 VMs Linux Debian, 1 pour l'hébergement du serveur et une pour la sauvegarde du serveur.<br>
+                Installer pfSense, notre pare-feu.
+            </p>
+        </div>
+        <div>
+            <div class="sous-titre">
+            <h2>PARTIE II :</h2>
+            <h2>MISE A JOUR ET INSTALLATION DES PAQUETS</h2>
+                <p>
+                    Après avoir saisi le mot de passe pour passer en mode root, on utilise la commande "sudo apt update" pour mettre à jour la liste des paquets disponibles pour notre système Linux, ici, on voit qu'il y en a plus de 90.
+                </p>
+            <img src="DOC INFRA/1.png" alt="">
+                <p>
+                    On a vu avec la commande précédente les paquets disponibles sur notre système, nous allons donc utiliser la commande "sudo apt install openssh-server" pour installer le paquet "openssh-server". "Openssh-server" est un serveur SSH (Secure Shell), il permet d'établir des connexions sécurisées et cryptées entre des machines et un réseau.                </p>
+            <img src="DOC INFRA/2.png" alt="">
+            <img src="DOC INFRA/3.png" alt="">
+                <p>
+                    Après l'installation terminée, on utilise la commande "ip addr" pour afficher les informations d'adresses IP et de réseau de notre système Linux. Ça nous affiche donc les informations sur toutes les interfaces réseau actives.                </p>
+            <img src="DOC INFRA/4.png" alt="">
+                <p>
+                    Nous nous sommes déconnectés, donc nous avons quitté le mode root, il nous fallait donc nous reconnecter avec la commande "su" suivie de notre mot de passe. Ensuite, on utilise la commande "sudo apt update" comme utilisé précédemment pour mettre à jour la liste des paquets disponibles. Puis, dans un dernier temps, on utilise la commande "sudo apt upgrade" qui, cette fois, va mettre à jour les paquets logiciels installés sur notre Linux/Debian.                </p>
+            <img src="DOC INFRA/5.png" alt="">
+        </div>
+        <div>
+            <div class="sous-titre">
+            <h2>PARTIE III :</h2>
+            <h2>INSTALLATION ET CONFIGURATION D'APACHE2</h2>
+                <p>
+                    On cherche à configurer et héberger des sites web sur notre machine, on utilise donc la commande "sudo apt install apache2". Cette commande va installer le serveur web Apache2 sur notre système Linux.
+                </p>
+            <img src="DOC INFRA/7.png" alt="">
+                <p>
+                    On veut vérifier l'état du service Apache2, donc on utilise la commande "sudo systemctl status apache2", on voit ainsi qu'Apache2 est bien en route.           
+                </p>
+            <img src="DOC INFRA/8.png" alt="">
+                <p>
+                    On cherche à configurer un hébergement pour notre site web, donc on utilise la commande "sudo mkdir /var/www/notresite", on va ainsi créer un nouveau répertoire "notresite" qui sera situé dans le dossier "www" qui lui-même se trouve dans le dossier "var". Suite à cela, on utilise la commande : "sudo nano /etc/apache2/sites-available/notresite.conf", cette commande nous sert à éditer le fichier "notresite.conf" en utilisant l'éditeur "Nano" qui fait partie d'Apache2.          
+                </p>
+            <img src="DOC INFRA/9.png" alt="">
+                    
+        </div>
+        <div>
+            <div class="sous-titre">
+            <h2>PARTIE IV :</h2>
+            <h2>TRANSFERT DU SITE WEB</h2>
+            <p>
+                Nous ne sommes plus en mode root, il nous faut donc nous reconnecter, pour cela on utilise "su", ensuite on entre notre mot de passe. Suite à cela, on utilise la commande "ip addr" pour retrouver notre adresse IP inet, pour nous c'est : "192.168.158.130/24".                
+            </p>
+        <img src="DOC INFRA/10.png" alt="">
+            <p>
+                Ainsi, on ouvre notre cmd, et on tape la commande : "scp -r \Users\mulle\Desktop\notresite utilisateur@192.168.158.130:/home/utilisateur". Cette commande permet de copier avec SCP le répertoire "notresite" qui est situé dans notre bureau "mulle" vers le serveur distant qui a donc l'adresse IP que nous avons relevée précédemment : "192.168.158.130". On place donc le répertoire dans le dossier "utilisateur" qui se situe dans le dossier "home".            
+            </p>
+        <img src="DOC INFRA/11.png" alt="">
+            <p>
+                Une fois que l'installation du pare-feu "PFSENSE" est terminée, on tombe sur cette interface. On peut s'en servir pour plein de choses, mais ce qui nous intéresse ici, c'est l'adresse IP située au-dessus de toutes les options. 
+            </p>           
+        <img src="DOC INFRA/11_5.png" alt="">
+            <p>
+                Nous avons pris l'adresse IP qui était "192.168.48.141" et nous la positionnons dans la barre de recherche internet.         
+            </p>  
+        <img src="DOC INFRA/11_6.png" alt="">
+            <p>
+                On tombe ainsi sur une page internet qui nous prévient du danger, nous devons passer cette page, donc on appuie sur "Avancé..." et ensuite sur "Accepter le risque et poursuivre".
+            </p>
+        <img src="DOC INFRA/11_7.png" alt="">
+            <p>
+                Nous sommes ainsi sur une page qui nous demande notre nom d'utilisateur et notre mot de passe. On remplit avec les identifiants de base, c'est-à-dire qu'on met dans "Username" "admin" et dans "Password" "pfsense".            
+            </p>
+        <img src="DOC INFRA/11_8.png" alt="">
+            <p>
+                On a 9 pages à passer, pour cette page il suffit d'appuyer sur le bouton "Next" en bas pour passer à la page suivante. 
+            </p>           
+        <img src="DOC INFRA/13.png" alt="">
+            <p>
+                Sur cette page, on remplit le "hostname" avec "pfSense", pour le "domain" on remplit par "localdomain" et le reste des champs ne nous intéresse pas ici, on laisse donc vide les champs "Primary DNS Server" et "Secondary DNS Server". On n'oublie pas de cocher "Override DNS" et on appuie sur le bouton "Next".         
+            </p>  
+        <img src="DOC INFRA/14.png" alt="">
+            <p>
+                Pour cette page, on remplit "Time server hostname" avec "2.pfsense.pool.ntp.org", c'est ce qui est dans le champ de base, pas besoin de changer, et en "Timezone" on sélectionne "Europe/Paris" pour indiquer qu'on se trouve en France. 
+            </p>           
+        <img src="DOC INFRA/15.png" alt="">
+            <p>
+                Une fois toutes les étapes terminées, on arrive sur cette page qui nous félicite d'avoir configuré pfSense, on peut enfin appuyer sur le bouton "Finish" pour terminer.         
+            </p>  
+        <img src="DOC INFRA/16.png" alt="">
+        </div>
+        <div>
+            <div class="sous-titre">
+            <h2>PARTIE V :</h2>
+            <h2>CONFIGURATION DU SITE WEB</h2>
+                <p>
+                    On commence par se mettre en mode root, donc on utilise la commande "su" et on rentre notre mot de passe. Suite à cela, on cherche à sélectionner le répertoire "notresite" et à le déplacer dans "/var/www/monsite", pour cela on utilise la commande "mv /home/utilisateur/notresite /var/www/monsite". Une fois cette commande rentrée, on veut vérifier le contenu du répertoire "notresite", pour cela on utilise la commande "ls /var/www/monsite/notresite" ce qui nous donne un fichier "main.css" et un fichier "notresite.html", donc tous les dossiers concernant le site web sont bien dans le répertoire.                
+                </p>
+            <img src="DOC INFRA/17.png" alt="">
+                <p>
+                    Ici, on utilise Nano issu du paquet Apache2 en rentrant la commande "sudo nano /etc/apache2/sites-available/monsite.conf". On utilise cette commande pour rentrer les configurations du serveur, parmi ces informations se trouve notamment le nom du serveur et où il se trouve, on rentre donc le contenu situé entre "<VirtualHost *:80>" et "</VirtualHost>".            
+                </p>
+            <img src="DOC INFRA/18.png" alt="">
+                <p>
+                    On cherche à activer le site web configuré dans le fichier monsite.conf, situé dans le répertoire /etc/apache2/sites-available/. Pour ce faire, on utilise la commande " sudo a2ensite monsite.conf". 
+                </p>           
+            <img src="DOC INFRA/19.png" alt="">
+        </div>
+        <div>
+            <div class="sous-titre">
+            <h2>PARTIE VI :</h2>
+            <h2>DESACTIVATION DU SITE WEB PAR DEFAUT ET REDEMARRAGE D'APACHE2</h2>
+                <p>
+                    Et enfin, on cherche à désactiver le site web par défaut. Pour ce faire, on utilise la commande "sudo a2dissite 000-default.conf". Ainsi, on utilise la commande "sudo systemctl restart apache2" pour redémarrer le service Apache2, ce qui permet de prendre en compte les modifications apportées aux fichiers de configuration et de résoudre d'éventuels problèmes liés au service.                
+                </p>
+            <img src="DOC INFRA/21.png" alt="">
+        </div>
+    </div>
+</body>
+</html>
